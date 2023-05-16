@@ -1,34 +1,44 @@
 import { useRef, useState, useEffect } from "react";
-
+import sound from "../Components/media/file.mp3";
 export default function Modal() {
   const ref = useRef();
+  const refaudio = useRef();
   const [joke, setJoke] = useState({ setup: "", punchline: "" });
+  let audio = new Audio(sound);
   useEffect(() => {
-    setTimeout( () => {
+    // refaudio.current.click();
+    setTimeout(() => {
       ref.current.click();
-      // setJoke({ setup: "", punchline: "" });
-       // eslint-disable-next-line 
-    }, 7000);
+      refaudio.current.click();
+    }, 5000);
+    // eslint-disable-next-line
   }, []);
 
+  let audioPlayer = () => {
+    try {
+     audio.play()
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   let jokemaker = async () => {
     let Joke = await fetch("https://official-joke-api.appspot.com/random_joke");
     let jokecontent = await Joke.json();
+    // refaudio.current.click();
     setJoke({ setup: jokecontent.setup, punchline: jokecontent.punchline });
   };
 
   let handleOnClose = () => {
     setJoke({ setup: "", punchline: "" });
     setTimeout(() => {
+      refaudio.current.click();
       ref.current.click();
-    }, 7000);
+    }, 5000);
   };
-  
 
   return (
     <>
-    <audio src="https://drive.google.com/file/d/1AaEmlBp9-DlcEIVWRd2diiw4Ur2dkcke/view?usp=share_link" autoPlay>cannot displey</audio>
       <div
         className="modal fade"
         id="exampleModalToggle"
@@ -40,7 +50,7 @@ export default function Modal() {
           <div className="modal-content">
             <div className="modal-header">
               <h1 className="modal-title fs-5" id="exampleModalToggleLabel">
-                Modal 1
+                Santa' Question
               </h1>
               <button
                 type="button"
@@ -57,9 +67,8 @@ export default function Modal() {
                 data-bs-target="#exampleModalToggle2"
                 data-bs-toggle="modal"
               >
-                Open second modal
+                Santa's Reply
               </button>
-              <audio src="https://www.youtube.com/watch?v=0Gc3nvmMQP0" autoPlay> this does not supports </audio>
             </div>
           </div>
         </div>
@@ -75,7 +84,7 @@ export default function Modal() {
           <div className="modal-content">
             <div className="modal-header">
               <h1 className="modal-title fs-5" id="exampleModalToggleLabel2">
-                Modal 2
+                {"Santa's Reply &#129315"}
               </h1>
               <button
                 type="button"
@@ -92,9 +101,8 @@ export default function Modal() {
                 data-bs-target="#exampleModalToggle"
                 data-bs-toggle="modal"
               >
-                Back to first
+                Back To Question
               </button>
-              <audio src="https://www.youtube.com/watch?v=0Gc3nvmMQP0" autoPlay> this does not supports </audio>
             </div>
           </div>
         </div>
@@ -108,6 +116,10 @@ export default function Modal() {
       >
         Open first modal
       </button>
+      <button className="d-none" ref={refaudio} onClick={audioPlayer}>
+        audioPlayer
+      </button>
+      {/* <button ref={refaudio} onClick={audioPlayer}>audioPlayer</button> */}
     </>
   );
 }

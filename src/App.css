@@ -1,3 +1,16 @@
-.navbar{
-    /* height: 80px; */
+footer{
+    width: 100%;
+    height: auto;
+    position: relative;
+    bottom:0px;
+    margin-bottom: 0px ;
+    margin-top: 10px;
+    margin-right: 0px;
+    margin-left: 0px;
+    padding : 10px 70px;
+    background-color: rgb(91, 86, 86);
+    color: azure;
+}
+.navBar{
+    border-bottom: 2px solid rgb(25, 80, 199);
 }
