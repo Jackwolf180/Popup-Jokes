@@ -6,20 +6,25 @@ export default function Modal() {
   const [joke, setJoke] = useState({ setup: "", punchline: "" });
   let audio = new Audio(sound);
   useEffect(() => {
-    // refaudio.current.click();
+    refaudio.current.click();
     setTimeout(() => {
       ref.current.click();
       refaudio.current.click();
-    }, 5000);
+      setJoke({ setup: "", punchline: "" });
+    }, 4000);
     // eslint-disable-next-line
   }, []);
 
   let audioPlayer = () => {
-    try {
-     audio.play()
-    } catch (error) {
-      console.log(error.message);
-    }
+     let promise =audio.play()
+     console.log(promise);
+     if(promise){
+      promise.then(()=>{
+
+      }).catch((e)=>{
+        console.log(e)
+      })
+     }
   };
 
   let jokemaker = async () => {
@@ -34,7 +39,7 @@ export default function Modal() {
     setTimeout(() => {
       refaudio.current.click();
       ref.current.click();
-    }, 5000);
+    }, 10000);
   };
 
   return (
@@ -119,7 +124,6 @@ export default function Modal() {
       <button className="d-none" ref={refaudio} onClick={audioPlayer}>
         audioPlayer
       </button>
-      {/* <button ref={refaudio} onClick={audioPlayer}>audioPlayer</button> */}
     </>
   );
 }
