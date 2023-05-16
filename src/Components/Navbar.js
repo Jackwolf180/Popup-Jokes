@@ -1,9 +1,17 @@
 import React from "react";
 
-const Navbar = () => {
+const Navbar = (props) => {
+  let handleMode=()=>{
+    if(props.darkModeswithch){
+      props.darkfunc(false)
+    }
+    else{
+      props.darkfunc(true)
+    }
+  }
   return (
     <div className="navBar">
-      <nav className="navbar navbar-expand-lg bg-body-tertiary">
+      <nav className={`navbar navbar-expand-lg bg-${props.darkModeswithch?"dark":"light"} navbar-${props.darkModeswithch?"dark":"light"} `}>
         <div className="container-fluid">
           <a className="navbar-brand" href="/">
             Cheer Up
@@ -42,6 +50,18 @@ const Navbar = () => {
                 </a>
               </li>
             </ul>
+            <div class="form-check form-switch d-flex">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="flexSwitchCheckChecked"
+                checked={props.darkModeswithch}
+                onClick={handleMode}
+              />
+              <label class={`form-check-label mx-3 text-${!props.darkModeswithch?"dark":"light"} `} for="flexSwitchCheckChecked">
+                {`${props.darkModeswithch?"Disable":"Enable"} Dark Mode`}
+              </label>
+            </div>
           </div>
         </div>
       </nav>

@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import sound from "../Components/media/file.mp3";
-export default function Modal() {
+export default function Modal(props) {
   const ref = useRef();
   const refaudio = useRef();
   const [joke, setJoke] = useState({ setup: "", punchline: "" });
@@ -50,10 +50,14 @@ export default function Modal() {
         aria-hidden="true"
         aria-labelledby="exampleModalToggleLabel"
         tabIndex="-1"
+        
       >
-        <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content">
-            <div className="modal-header">
+        <div className="modal-dialog modal-dialog-centered" >
+          <div className="modal-content" style={{
+            backgroundColor: props.mode? "#3d36a3":"white" ,
+            color: !props.mode? "black" : "white",
+          }}>
+            <div className="modal-header" >
               <h1 className="modal-title fs-5" id="exampleModalToggleLabel">
                 Santa' Question
               </h1>
@@ -86,7 +90,10 @@ export default function Modal() {
         tabIndex="-1"
       >
         <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content">
+          <div className="modal-content" style={{
+            backgroundColor: props.mode? "#3d36a3":"white" ,
+            color: !props.mode? "black" : "white",
+          }}>
             <div className="modal-header">
               <h1 className="modal-title fs-5" id="exampleModalToggleLabel2">
                 {"Santa's Reply &#129315"}
