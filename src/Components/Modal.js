@@ -2,44 +2,32 @@ import { useRef, useState, useEffect } from "react";
 import sound from "../Components/media/file.mp3";
 export default function Modal(props) {
   const ref = useRef();
-  const refaudio = useRef();
   const [joke, setJoke] = useState({ setup: "", punchline: "" });
   let audio = new Audio(sound);
+  const [counter, setcounter] = useState(0);
   useEffect(() => {
-    refaudio.current.click();
-    setTimeout(() => {
+    console.log("useeffect is callled now");
+    let timer = setTimeout(() => {
       ref.current.click();
-      refaudio.current.click();
-      setJoke({ setup: "", punchline: "" });
-    }, 4000);
-    // eslint-disable-next-line
-  }, []);
+    }, 7000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [counter]);
 
-  let audioPlayer = () => {
-     let promise =audio.play()
-     console.log(promise);
-     if(promise){
-      promise.then(()=>{
-
-      }).catch((e)=>{
-        console.log(e)
-      })
-     }
-  };
-
-  let jokemaker = async () => {
+  let activate = async () => {
+    console.log("activate is callled now");
     let Joke = await fetch("https://official-joke-api.appspot.com/random_joke");
     let jokecontent = await Joke.json();
-    // refaudio.current.click();
+    let promise = audio.play();
+    if (promise) {
+      promise
+        .then(() => {})
+        .catch((e) => {
+          console.log(e);
+        });
+    }
     setJoke({ setup: jokecontent.setup, punchline: jokecontent.punchline });
-  };
-
-  let handleOnClose = () => {
-    setJoke({ setup: "", punchline: "" });
-    setTimeout(() => {
-      refaudio.current.click();
-      ref.current.click();
-    }, 10000);
   };
 
   return (
@@ -50,14 +38,16 @@ export default function Modal(props) {
         aria-hidden="true"
         aria-labelledby="exampleModalToggleLabel"
         tabIndex="-1"
-        
       >
-        <div className="modal-dialog modal-dialog-centered" >
-          <div className="modal-content" style={{
-            backgroundColor: props.mode? "#3d36a3":"white" ,
-            color: !props.mode? "black" : "white",
-          }}>
-            <div className="modal-header" >
+        <div className="modal-dialog modal-dialog-centered">
+          <div
+            className="modal-content"
+            style={{
+              backgroundColor: props.mode ? "#3d36a3" : "white",
+              color: !props.mode ? "black" : "white",
+            }}
+          >
+            <div className="modal-header">
               <h1 className="modal-title fs-5" id="exampleModalToggleLabel">
                 Santa' Question
               </h1>
@@ -66,7 +56,9 @@ export default function Modal(props) {
                 className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
-                onClick={handleOnClose}
+                onClick={() => {
+                  setcounter(counter + 1);
+                }}
               ></button>
             </div>
             <div className="modal-body">{joke.setup}</div>
@@ -90,10 +82,13 @@ export default function Modal(props) {
         tabIndex="-1"
       >
         <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content" style={{
-            backgroundColor: props.mode? "#3d36a3":"white" ,
-            color: !props.mode? "black" : "white",
-          }}>
+          <div
+            className="modal-content"
+            style={{
+              backgroundColor: props.mode ? "#3d36a3" : "white",
+              color: !props.mode ? "black" : "white",
+            }}
+          >
             <div className="modal-header">
               <h1 className="modal-title fs-5" id="exampleModalToggleLabel2">
                 {"Santa's Reply &#129315"}
@@ -103,7 +98,9 @@ export default function Modal(props) {
                 className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
-                onClick={handleOnClose}
+                onClick={() => {
+                  setcounter(counter + 1);
+                }}
               ></button>
             </div>
             <div className="modal-body">{`${joke.punchline}`}</div>
@@ -124,12 +121,9 @@ export default function Modal(props) {
         ref={ref}
         data-bs-target="#exampleModalToggle"
         data-bs-toggle="modal"
-        onClick={jokemaker}
+        onClick={activate}
       >
-        Open first modal
-      </button>
-      <button className="d-none" ref={refaudio} onClick={audioPlayer}>
-        audioPlayer
+        Activate
       </button>
     </>
   );

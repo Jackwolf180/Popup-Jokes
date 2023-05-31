@@ -9,6 +9,7 @@ const Navbar = (props) => {
       props.darkfunc(true)
     }
   }
+
   return (
     <div className="navBar">
       <nav className={`navbar navbar-expand-lg bg-${props.darkModeswithch?"dark":"light"} navbar-${props.darkModeswithch?"dark":"light"} `}>
@@ -50,15 +51,16 @@ const Navbar = (props) => {
                 </a>
               </li>
             </ul>
-            <div class="form-check form-switch d-flex">
+            <div className="form-check form-switch d-flex">
               <input
-                class="form-check-input"
+                className="form-check-input"
                 type="checkbox"
                 id="flexSwitchCheckChecked"
+                readOnly
                 checked={props.darkModeswithch}
                 onClick={handleMode}
               />
-              <label class={`form-check-label mx-3 text-${!props.darkModeswithch?"dark":"light"} `} for="flexSwitchCheckChecked">
+              <label className={`form-check-label mx-3 text-${!props.darkModeswithch?"dark":"light"} `} htmlFor="flexSwitchCheckChecked">
                 {`${props.darkModeswithch?"Disable":"Enable"} Dark Mode`}
               </label>
             </div>

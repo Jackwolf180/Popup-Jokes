@@ -1,4 +1,4 @@
-import React from "react";
+import React, { StrictMode } from "react";
 import Modal from "./Modal";
 import Crousel from "./Crousel";
 import Cards from "./Cards";
@@ -18,7 +18,9 @@ export default function Body(props) {
           color: !props.darkModeswithch ? "black" : "white",
         }}
       >
+        <StrictMode>
         <Modal mode={props.darkModeswithch} />
+        </StrictMode>
         <div
           className="row"
           style={{
